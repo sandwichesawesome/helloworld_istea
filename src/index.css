@@ -1,0 +1,423 @@
+@import 'tailwindcss';
+
+/* 다크 모드: <html data-theme="dark"> (라이트/다크 토글 · 시스템 설정 기본) */
+@custom-variant dark (&:where([data-theme='dark'], [data-theme='dark'] *));
+
+/* 색은 인하대 상징색 기반 — INHA DEEP BLUE #005BAC · INHA SKY BLUE #00AFEC
+   (토큰 이름 forest/moss 는 초기 녹색 테마의 이름을 그대로 둔 것: forest = 강조색, forest-dark = 강조 글자) */
+@theme {
+  --font-sans: 'Noto Sans KR', 'Pretendard', 'Malgun Gothic', 'Apple SD Gothic Neo', system-ui, sans-serif;
+  --color-ink: #13233a;
+  --color-muted: #66768a;
+  --color-forest: #005bac;
+  --color-forest-dark: #004a8c;
+  --color-moss: #aad3f1;
+  --color-mist: #edf3f9;
+  --color-paper: #fbfcfe;
+  --color-surface: #ffffff;
+  --color-nav: #e5233b;
+  --color-nav-dark: #c01a2f;
+}
+
+/* ---------- 테마 토큰 (라이트) ---------- */
+:root {
+  color-scheme: light;
+  --inha-deep-blue: #005bac;
+  --inha-sky-blue: #00afec;
+
+  --app-bg: #e6edf5;
+  --map-bg: #eef3f9;
+  --map-dot: rgb(0 91 172 / 0.08);
+  --panel-bg: rgb(255 255 255 / 0.94);
+  --panel-border: rgb(19 35 58 / 0.08);
+  --panel-shadow: 0 1px 2px rgb(19 35 58 / 0.06), 0 8px 28px -6px rgb(19 35 58 / 0.18);
+
+  /* 평면도 */
+  --fp-ink: #13233a;
+  --fp-muted: #66768a;
+  --fp-line: #3a4658;
+  --fp-wall: #0f1a2a;
+  --fp-room: #fbfcfe;
+  --fp-paper: #ffffff;
+  --fp-cor: #aad3f1;
+  --fp-court: #e5ecf4;
+  --fp-court-text: #7a8799;
+  --fp-title: #005bac;
+  --fp-exit: #1f7a3f;
+  --fp-hover: #fff4c2;
+  --fp-stair-bg: #dde4ec;
+  --fp-stair-line: #8b97a8;
+  --fp-grid-bg: #ffffff;
+  --fp-grid-line: #b7c3d1;
+  --fp-unknown-bg: #e8edf3;
+  --fp-unknown-line: #c7d0dc;
+  --fp-void-bg: #f3f6fa;
+  --fp-void-line: #d4dce6;
+  --fp-excluded-line: #98a4b4;
+  --fp-box-line: #dbe3ec;
+
+  /* 건물 바깥 */
+  --site-road: #d8dfe8;
+  --site-road-edge: #fbfcfe;
+  --site-road-center: #7a8799;
+  --site-roof: #f3f6fa;
+  --site-roof-line: #e1e8f0;
+  --site-field: #cfe3f3;
+  --site-field-inner: #b7d6ee;
+  --site-field-line: #ffffff;
+  --site-halo: #f3f6fa;
+
+  /* 오버레이 */
+  --route-casing: #ffffff;
+  --route-ahead: #f8a5ae;
+  --bubble-dark: #13233a;
+  --glow-stroke: #0ea5e9;
+}
+/* 다크 테마: 인하대 상징색 기반 — INHA DEEP BLUE #005BAC · INHA SKY BLUE #00AFEC */
+[data-theme='dark'] {
+  color-scheme: dark;
+
+  --color-ink: #e2ecf8;
+  --color-muted: #93a8c4;
+  --color-forest: #1f6fc9; /* 강조 배경 (활성 층 버튼 등) — 인하 딥블루를 밝힘 */
+  --color-forest-dark: #8ccdf6; /* 강조 글자 — 인하 스카이블루 계열 */
+  --color-moss: #1b4677;
+  --color-mist: #17283f;
+  --color-paper: #12213a;
+  --color-surface: #0e1b2e;
+
+  --app-bg: #07111f;
+  --map-bg: #0a1626;
+  --map-dot: rgb(0 175 236 / 0.09);
+  --panel-bg: rgb(14 27 46 / 0.94);
+  --panel-border: rgb(140 205 246 / 0.12);
+  --panel-shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 10px 32px -6px rgb(0 8 20 / 0.7);
+
+  --fp-ink: #dde8f5;
+  --fp-muted: #8ea3bf;
+  --fp-line: #4a6286;
+  --fp-wall: #c3d4ea;
+  --fp-room: #122038;
+  --fp-paper: #122038;
+  --fp-cor: #1b4677;
+  --fp-court: #0c1829;
+  --fp-court-text: #6a82a3;
+  --fp-title: #7cc8f5;
+  --fp-exit: #2f9a58;
+  --fp-hover: #214d7d;
+  --fp-stair-bg: #1a2b44;
+  --fp-stair-line: #3c5476;
+  --fp-grid-bg: #122038;
+  --fp-grid-line: #283d5c;
+  --fp-unknown-bg: #15253d;
+  --fp-unknown-line: #22364f;
+  --fp-void-bg: #0f1c30;
+  --fp-void-line: #1c2d45;
+  --fp-excluded-line: #4a6286;
+  --fp-box-line: #283d5c;
+
+  --site-road: #15233a;
+  --site-road-edge: #2c4262;
+  --site-road-center: #7a90ad;
+  --site-roof: #122038;
+  --site-roof-line: #182a44;
+  --site-field: #123a5e;
+  --site-field-inner: #17456f;
+  --site-field-line: #7cc8f5;
+  --site-halo: #0a1626;
+
+  --route-casing: #07111f;
+  --route-ahead: #7a3346;
+  --bubble-dark: #29486f;
+  --glow-stroke: #38bdf8;
+}
+
+/* 테마 전환: 원형으로 퍼지는 View Transition (지원 브라우저) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--app-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* ---------- 평면도 ---------- */
+.map-surface {
+  background:
+    radial-gradient(circle at 1px 1px, var(--map-dot) 1px, transparent 0) 0 0 / 22px 22px,
+    var(--map-bg);
+}
+.map-surface.is-dragging {
+  cursor: grabbing;
+}
+.fp-space.interactive {
+  cursor: pointer;
+}
+.fp-space.interactive:hover .fp-fill {
+  fill: var(--fp-hover);
+}
+.fp-space.fp-stairs.interactive:hover .fp-fill,
+.fp-space.fp-entrance.interactive:hover .fp-fill {
+  stroke: #b45309;
+  stroke-width: 2;
+}
+.fp-floor text {
+  pointer-events: none;
+}
+
+.floor-enter-up {
+  animation: floor-in-up 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+.floor-enter-down {
+  animation: floor-in-down 520ms cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+@keyframes floor-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(46px);
+  }
+}
+@keyframes floor-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-46px);
+  }
+}
+
+/* ---------- 오버레이 (--inv-k = 1/줌 → 화면 기준 두께 유지) ---------- */
+.sel-outline {
+  fill: rgb(245 158 11 / 0.22);
+  stroke: #d97706;
+  stroke-width: calc(2.5px * var(--inv-k));
+}
+.dest-outline {
+  fill: rgb(229 35 59 / 0.14);
+  stroke: var(--color-nav);
+  stroke-width: calc(3px * var(--inv-k));
+  animation: dest-glow 1.4s ease-in-out infinite;
+}
+@keyframes dest-glow {
+  50% {
+    fill: rgb(229 35 59 / 0.3);
+  }
+}
+
+.route-casing,
+.route-line {
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+.route-casing {
+  stroke: var(--route-casing);
+  stroke-opacity: 0.85;
+  stroke-width: calc(11px * var(--inv-k));
+}
+.route-ahead {
+  stroke: var(--route-ahead);
+  stroke-width: calc(6px * var(--inv-k));
+}
+.route-traveled {
+  stroke: var(--color-nav);
+  stroke-width: calc(6px * var(--inv-k));
+}
+.route-done {
+  stroke: var(--route-ahead);
+  stroke-width: calc(5px * var(--inv-k));
+  stroke-dasharray: 2 10;
+}
+
+.pulse-ring {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: pulse-ring 1.8s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+}
+.pulse-ring.delay {
+  animation-delay: 0.9s;
+}
+.pulse-blue {
+  fill: rgb(37 99 235 / 0.35);
+}
+.pulse-red {
+  fill: rgb(229 35 59 / 0.35);
+}
+@keyframes pulse-ring {
+  from {
+    transform: scale(0.8);
+    opacity: 0.9;
+  }
+  to {
+    transform: scale(3.6);
+    opacity: 0;
+  }
+}
+
+/* 현재 위치 초기화: 출입구 반짝임 (연한 하늘색) */
+.entrance-glow {
+  fill: rgb(125 211 252 / 0.3);
+  stroke: var(--glow-stroke);
+  stroke-width: calc(3.5px * var(--inv-k));
+  stroke-linejoin: round;
+  filter: drop-shadow(0 0 calc(8px * var(--inv-k)) rgb(125 211 252 / 0.95));
+  animation: entrance-blink 0.95s ease-in-out infinite alternate;
+}
+.entrance-glow.emph {
+  stroke: #0284c7;
+  stroke-width: calc(5px * var(--inv-k));
+  animation-duration: 0.45s;
+}
+@keyframes entrance-blink {
+  from {
+    fill: rgb(186 230 253 / 0.2);
+    stroke-opacity: 0.55;
+  }
+  to {
+    fill: rgb(125 211 252 / 0.75);
+    stroke-opacity: 1;
+  }
+}
+.pulse-sky {
+  fill: rgb(56 189 248 / 0.38);
+}
+.sparkle {
+  fill: #bae6fd;
+  stroke: #fff;
+  stroke-width: 1;
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: sparkle 1.5s ease-in-out infinite;
+}
+@keyframes sparkle {
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(0deg);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15) rotate(45deg);
+  }
+}
+.float-soft {
+  animation: float-soft 1.1s ease-in-out infinite alternate;
+}
+.float-soft.emph {
+  animation-duration: 0.5s;
+}
+@keyframes float-soft {
+  to {
+    transform: translateY(-6px);
+  }
+}
+.reset-active {
+  animation: reset-ring 1.2s ease-out infinite;
+}
+@keyframes reset-ring {
+  from {
+    box-shadow: 0 0 0 0 rgb(56 189 248 / 0.55);
+  }
+  to {
+    box-shadow: 0 0 0 12px rgb(56 189 248 / 0);
+  }
+}
+
+.pin-bounce {
+  animation: pin-bounce 0.9s cubic-bezier(0.3, 0, 0.5, 1) infinite alternate;
+}
+@keyframes pin-bounce {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-13px);
+  }
+}
+
+.arrow-pop .arrow-inner {
+  animation: arrow-pop 420ms cubic-bezier(0.3, 1.6, 0.5, 1) both;
+}
+@keyframes arrow-pop {
+  from {
+    transform: scale(0);
+  }
+}
+
+/* ---------- UI ---------- */
+.panel {
+  background: var(--panel-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--panel-border);
+  box-shadow: var(--panel-shadow);
+}
+
+/* 헤더 드롭다운이 열리면 아래 패널은 아래로 내려가며 사라짐 */
+.sheet-slide {
+  transition:
+    opacity 260ms ease,
+    translate 380ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    scale 380ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.sheet-hidden {
+  opacity: 0;
+  translate: 0 48px;
+  scale: 0.97;
+}
+@media (max-width: 767px) {
+  .sheet-hidden {
+    translate: 0 calc(100% + 24px);
+    scale: 1;
+  }
+}
+
+.cta-in {
+  animation: cta-in 380ms cubic-bezier(0.2, 1.3, 0.4, 1) both;
+}
+@keyframes cta-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.96);
+  }
+}
+
+.fade-in {
+  animation: fade-in 220ms ease-out both;
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sheet-slide {
+    transition: opacity 150ms ease;
+  }
+  .sheet-hidden {
+    translate: none;
+    scale: none;
+  }
+  .pin-bounce,
+  .pulse-ring,
+  .sparkle,
+  .float-soft,
+  .reset-active,
+  .dest-outline,
+  .floor-enter-up,
+  .floor-enter-down {
+    animation: none;
+  }
+}

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="theme-color" content="#005bac" />
+    <script>
+      // 저장된 테마 → 없으면 시스템 설정. React 로드 전에 적용해 깜빡임을 막는다.
+      (function () {
+        var t = 'light';
+        try {
+          t = localStorage.getItem('istea.theme') || (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        } catch (e) {}
+        document.documentElement.dataset.theme = t === 'dark' ? 'dark' : 'light';
+      })();
+    </script>
+    <title>5호관 길찾기</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" sizes="64x64" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <script type="module" crossorigin src="/assets/index-DXrs9G-A.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/index-D1lOr2-k.css">
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
