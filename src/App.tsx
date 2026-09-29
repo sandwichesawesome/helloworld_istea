@@ -20,6 +20,7 @@ import { SearchBox, type SearchBoxHandle } from './components/SearchBox';
 import { NextFloorButton, RoutePanel } from './components/RoutePanel';
 import { EntrancePickBanner, FloorSwitcher, Legend, ResetLocationButton, SpaceCard, StartPicker, ThemeToggle, ZoomControls } from './components/Controls';
 import { useTheme } from './lib/theme';
+import { ThemeNotice } from './components/ThemeNotice';
 import { IconLocate, IconX } from './components/icons';
 
 const RECENT_KEY = 'istea.recent';
@@ -73,7 +74,7 @@ export default function App() {
   const sheetRef = useRef<HTMLDivElement>(null);
   const bannerRef = useRef<HTMLDivElement>(null);
   const isDesktop = useIsDesktop();
-  const { theme, toggle: toggleTheme } = useTheme();
+  const { theme, fromSystem, toggle: toggleTheme } = useTheme();
 
   const floor = FLOOR_BY_ID[floorId];
   const selected = selectedId ? SPACE_BY_ID[selectedId] : undefined;
@@ -338,7 +339,7 @@ export default function App() {
       {/* 좌측(모바일: 상단) 패널 */}
       <aside
         ref={asideRef}
-        className="pointer-events-none absolute inset-x-2 top-2 z-20 flex flex-col gap-3 md:inset-x-auto md:bottom-4 md:left-4 md:top-4 md:w-[392px]"
+        className="pointer-events-none absolute inset-x-2 top-2 z-30 flex flex-col gap-3 md:inset-x-auto md:bottom-4 md:left-4 md:top-4 md:w-[392px]"
       >
         <div ref={headerRef} className="panel pointer-events-auto relative z-10 rounded-3xl p-2.5 md:p-3">
           <div className="hidden items-center gap-2.5 px-1.5 pb-2.5 pt-0.5 md:flex">
@@ -368,7 +369,7 @@ export default function App() {
             />
             <div className="mx-1 my-2 h-px bg-ink/5" />
           </div>
-          <SearchBox ref={searchRef} near={start} recent={recent} onSelect={(s) => navigateTo(s)} onOpenChange={setSearchOpen} />
+          <SearchBox ref={searchRef} near={start} recent={recent} onSelect={(s) => navigateTo(s)} onOpenChange={setSearchOpen} compact={!isDesktop} />
           <div className="mt-1.5 md:hidden">
             <StartPicker
               start={start}
@@ -531,6 +532,9 @@ export default function App() {
           {toast}
         </div>
       )}
+
+      {/* 접속 안내: 현재 테마 + 모드 변경 + 다시 보지 않기 */}
+      <ThemeNotice theme={theme} fromSystem={fromSystem} onSwitch={(origin) => toggleTheme(origin)} />
     </div>
   );
 }

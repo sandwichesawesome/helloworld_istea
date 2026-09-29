@@ -31,6 +31,8 @@ type VTDocument = Document & {
 
 export function useTheme() {
   const [theme, setTheme] = useState<Theme>(current);
+  /** 사용자가 직접 고르지 않고 시스템 설정을 따르는 중인지 */
+  const [fromSystem, setFromSystem] = useState(() => savedTheme() === null);
 
   useEffect(() => {
     apply(current());
@@ -46,8 +48,11 @@ export function useTheme() {
     return () => mq.removeEventListener('change', onChange);
   }, []);
 
-  /** origin: 전환 애니메이션이 퍼져 나갈 화면 좌표 (보통 토글 버튼 중심) */
-  const toggle = useCallback((origin?: { x: number; y: number }) => {
+  /**
+   * origin: 전환 애니메이션이 퍼져 나갈 화면 좌표 (보통 토글 버튼 중심)
+   * alsoRun: 테마 변경과 같은 순간에 반영할 UI 변경 (예: 안내창 닫기 — 새 화면 스냅샷에 포함됨)
+   */
+  const toggle = useCallback((origin?: { x: number; y: number }, alsoRun?: () => void) => {
     const next: Theme = current() === 'dark' ? 'light' : 'dark';
     try {
       localStorage.setItem(KEY, next);
@@ -57,6 +62,8 @@ export function useTheme() {
     const commit = () => {
       apply(next);
       setTheme(next);
+      setFromSystem(false);
+      alsoRun?.();
     };
     const doc = document as VTDocument;
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -78,5 +85,5 @@ export function useTheme() {
       .catch(() => {});
   }, []);
 
-  return { theme, toggle };
+  return { theme, fromSystem, toggle };
 }

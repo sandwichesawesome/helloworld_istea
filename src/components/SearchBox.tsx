@@ -16,6 +16,8 @@ interface Props {
   onSelect(space: Space): void;
   /** 드롭다운 열림/닫힘 알림 (아래 패널 숨김용) */
   onOpenChange?(open: boolean): void;
+  /** 좁은 화면: 짧은 안내 문구 */
+  compact?: boolean;
 }
 
 function Highlight({ text, q }: { text: string; q: string }): ReactNode {
@@ -45,7 +47,7 @@ export function FloorBadge({ floorId, className = '' }: { floorId: string; class
   );
 }
 
-export const SearchBox = forwardRef<SearchBoxHandle, Props>(function SearchBox({ near, recent, onSelect, onOpenChange }, ref) {
+export const SearchBox = forwardRef<SearchBoxHandle, Props>(function SearchBox({ near, recent, onSelect, onOpenChange, compact }, ref) {
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState(0);
@@ -167,8 +169,8 @@ export const SearchBox = forwardRef<SearchBoxHandle, Props>(function SearchBox({
           }}
           onFocus={() => setOpen(true)}
           onKeyDown={onKey}
-          placeholder="호실 번호, 이름, 용도 검색 (예: 354, 화장실)"
-          className="h-full min-w-0 flex-1 bg-transparent text-[15px] outline-none placeholder:text-muted/80"
+          placeholder={compact ? '호실 번호 · 이름 · 용도 검색' : '호실 번호, 이름, 용도 검색 (예: 354, 화장실)'}
+          className="h-full min-w-0 flex-1 bg-transparent text-base outline-none placeholder:text-muted/80 md:text-[15px]"
           role="combobox"
           aria-expanded={open}
           aria-controls={listId}
