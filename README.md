@@ -9,6 +9,19 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
+## 배포 (Google Cloud Run)
+
+`Dockerfile`(Node 로 빌드 → nginx 로 `dist/` 제공, 8080 포트)과 `nginx.conf` 로 Cloud Run 에 올린다.
+Docker 설치 없이 Cloud Build 가 원격으로 이미지를 만든다. 코드 수정 후 같은 명령을 다시 실행하면 새 버전이 배포된다.
+
+```bash
+gcloud.cmd run deploy istea --source . --region asia-northeast3 --allow-unauthenticated --max-instances 2 --project helloworld-510100
+```
+
+- 주소: https://istea-325994405590.asia-northeast3.run.app
+- PowerShell 에서는 `gcloud` 대신 `gcloud.cmd` (실행 정책으로 `gcloud.ps1` 이 막힐 수 있음)
+- 처음 배포 때 기본 Compute 서비스 계정에 `roles/run.builder` 권한을 부여함 (Cloud Build 가 소스를 읽고 이미지를 저장하는 데 필요)
+
 ## 기능
 
 - **탑다운 평면도**: SVG 렌더링, 드래그 이동 · 휠/핀치 확대 · 더블클릭 확대 · `+` `-` `0` 단축키
